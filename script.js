@@ -1,4 +1,4 @@
-
+// Car class Definition
 class Car 
 {
   constructor(name, model, year, price) 
@@ -8,7 +8,8 @@ class Car
     this.year = year;
     this.price = price;
   }
-
+  
+// Method to calculate price after depreciation
   calculatePrice(currentYear) 
   {
     // Calculate the age of the car
@@ -19,15 +20,20 @@ class Car
   }
 }
 
-class CarManager {
-  constructor() {
+// Class definition
+class CarManager 
+{
+  constructor() 
+  {
     this.cars = [];
   }
-
-  addCar(car) {
+// Method to add a car to inventory
+  addCar(car) 
+  {
     this.cars.push(car);
   }
 
+  // Method to display all cars in inventory
   displayCars() 
   {
     const carList = document.getElementById('car-list');
@@ -43,7 +49,7 @@ class CarManager {
         </li>`;
     });
   }
-
+// Method to both display and calculate total price of ALL cars after depreciation
   showTotalPrice() 
   {
     const currentYear = new Date().getFullYear();
@@ -55,3 +61,40 @@ class CarManager {
     document.getElementById('total-price').innerText = `Total Inventory Price: $${totalPrice}`;
   }
 }
+
+// Event listener setup
+document.addEventListener('DOMContentLoaded', () => 
+  {
+  const carManager = new CarManager();
+
+  // Event listener for 'Add Car' 
+  document.getElementById('add-car').addEventListener('click', () => 
+    {
+    // Get input values from the form
+    const name = document.getElementById('name').value;
+    const model = document.getElementById('model').value;
+    const year = parseInt(document.getElementById('year').value);
+    const price = parseFloat(document.getElementById('price').value);
+
+    // Input fields validated before adding a new car
+    if (name && model && year && price) 
+    {
+      const newCar = new Car(name, model, year, price);
+      carManager.addCar(newCar);
+      carManager.displayCars();
+
+      // Form fields cleared after adding a car
+      document.getElementById('car-form').reset();
+    } else 
+    {
+      alert('Please fill out all fields correctly!');
+    }
+  });
+
+  // Event listener for 'Calculate Total Price' 
+  document.getElementById('calculate-total').addEventListener('click', () => 
+  {
+    carManager.showTotalPrice();
+  });
+  
+});
